@@ -1,4 +1,4 @@
-package com.gateway.api_gateway.security;
+package com.example.RedNorte_API_GATEWAY.security;
 
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
