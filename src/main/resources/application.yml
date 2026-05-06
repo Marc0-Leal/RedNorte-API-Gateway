@@ -1,0 +1,42 @@
+server:
+  port: 8080
+
+app:
+  security:
+    jwt:
+      secret: ${JWT_SECRET:change-this-super-secret-key-at-least-32-chars}
+      issuer: ${JWT_ISSUER:api-gateway}
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          use-framework-retry-filter: true
+          routes:
+            - id: users-api
+              uri: ${USERS_API_URI:http://users-service:3001}
+              predicates:
+                - Path=/api/users/**
+              filters:
+                - StripPrefix=2
+                - Retry=2
+
+            - id: orders-api
+              uri: ${ORDERS_API_URI:http://orders-service:3003}
+              predicates:
+                - Path=/api/orders/**
+              filters:
+                - StripPrefix=2
+                - Retry=2
+
+            - id: products-api
+              uri: ${PRODUCTS_API_URI:http://inventory-service:3002}
+              predicates:
+                - Path=/api/products/**
+              filters:
+                - StripPrefix=2
+                - Retry=2
