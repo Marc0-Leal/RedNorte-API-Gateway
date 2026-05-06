@@ -1,4 +1,4 @@
-package com.gateway.api_gateway.security;
+package com.example.RedNorte_API_GATEWAY.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
