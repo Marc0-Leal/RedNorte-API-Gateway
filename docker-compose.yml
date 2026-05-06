@@ -1,0 +1,21 @@
+services:
+  api-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      JWT_SECRET: ${JWT_SECRET:-change-this-super-secret-key-at-least-32-chars}
+      JWT_ISSUER: ${JWT_ISSUER:-api-gateway}
+      USERS_API_URI: ${USERS_API_URI:-http://users-service:3001}
+      ORDERS_API_URI: ${ORDERS_API_URI:-http://orders-service:3003}
+      PRODUCTS_API_URI: ${PRODUCTS_API_URI:-http://inventory-service:3002}
+    networks:
+      - shopsmart-network
+
+networks:
+  shopsmart-network:
+    external: true
+    name: shopsmart-network
