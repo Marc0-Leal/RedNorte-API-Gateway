@@ -1,4 +1,4 @@
-package com.example.RedNorte_API_GATEWAY.auth;
+package com.example.auth;
 
 import java.util.List;
 
