@@ -1,4 +1,4 @@
-package com.example.RedNorte_API_GATEWAY.security;
+package com.example.security;
 
 import com.nimbusds.jwt.JWTClaimsSet;
 import jakarta.servlet.FilterChain;

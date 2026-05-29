@@ -1,4 +1,4 @@
-package com.example.RedNorte_API_GATEWAY.error;
+package com.example.error;
 
 import jakarta.servlet.http.HttpServletRequest;
 import java.net.ConnectException;

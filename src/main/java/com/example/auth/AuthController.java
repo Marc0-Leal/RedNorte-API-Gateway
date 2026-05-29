@@ -1,13 +1,17 @@
-package com.example.RedNorte_API_GATEWAY.auth;
+package com.example.auth;
 
-import com.example.RedNorte_API_GATEWAY.security.JwtTokenService;
 import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+//import com.example.auth.TokenRequest;
+//import com.example.auth.TokenResponse;
+import com.example.security.JwtTokenService;
 
 @RestController
 @RequestMapping("/auth")
