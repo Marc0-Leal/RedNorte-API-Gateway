@@ -21,20 +21,33 @@ public class GatewayService {
             String path = request.getRequestURI();
             String fullUrl = targetUrl + path;
 
-            HttpHeaders headers = new HttpHeaders();
+            HttpHeaders requestHeaders = new HttpHeaders();
             Enumeration<String> headerNames = request.getHeaderNames();
             while (headerNames.hasMoreElements()) {
                 String headerName = headerNames.nextElement();
                 if (!headerName.equalsIgnoreCase("host") &&
                     !headerName.equalsIgnoreCase("accept-encoding")) {
-                    headers.add(headerName, request.getHeader(headerName));
+                    requestHeaders.add(headerName, request.getHeader(headerName));
                 }
             }
 
-            HttpEntity<?> entity = new HttpEntity<>(headers);
+            HttpEntity<?> entity = new HttpEntity<>(requestHeaders);
             HttpMethod method = HttpMethod.valueOf(request.getMethod());
-            ResponseEntity<?> response = restTemplate.exchange(fullUrl, method, entity, String.class);
-            return response;
+            ResponseEntity<String> response = restTemplate.exchange(fullUrl, method, entity, String.class);
+
+            HttpHeaders responseHeaders = new HttpHeaders();
+            response.getHeaders().forEach((key, values) -> {
+                if (!key.equalsIgnoreCase("Access-Control-Allow-Origin") &&
+                    !key.equalsIgnoreCase("Access-Control-Allow-Methods") &&
+                    !key.equalsIgnoreCase("Access-Control-Allow-Headers") &&
+                    !key.equalsIgnoreCase("Transfer-Encoding")) {
+                    responseHeaders.addAll(key, values);
+                }
+            });
+
+            return ResponseEntity.status(response.getStatusCode())
+                .headers(responseHeaders)
+                .body(response.getBody());
 
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error enrutando request: " + e.getMessage());
