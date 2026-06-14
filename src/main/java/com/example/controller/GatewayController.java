@@ -30,7 +30,7 @@ public class GatewayController {
      * RUTAS CLÍNICA
      * GET/POST http://localhost:8080/api/clinica/**
      */
-    @RequestMapping(value = "/clinica/**", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
+    @RequestMapping(value = "/hospital/**", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
     public ResponseEntity<?> clinica(HttpServletRequest request) {
         return gatewayService.forwardRequest(request, "http://localhost:8081");
     }
