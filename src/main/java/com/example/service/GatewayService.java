@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
+import java.io.IOException;
 
 @Service
 public class GatewayService {
@@ -20,7 +21,6 @@ public class GatewayService {
         try {
             String path = request.getRequestURI();
             String fullUrl = targetUrl + path;
-
             HttpHeaders requestHeaders = new HttpHeaders();
             Enumeration<String> headerNames = request.getHeaderNames();
             while (headerNames.hasMoreElements()) {
@@ -30,8 +30,14 @@ public class GatewayService {
                     requestHeaders.add(headerName, request.getHeader(headerName));
                 }
             }
+            String body = null;
+            try {
+                body = new String(request.getInputStream().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+            } catch (IOException e) {
+                body = "";
+            }
 
-            HttpEntity<?> entity = new HttpEntity<>(requestHeaders);
+            HttpEntity<String> entity = new HttpEntity<>(body.isEmpty() ? null : body, requestHeaders);
             HttpMethod method = HttpMethod.valueOf(request.getMethod());
             ResponseEntity<String> response = restTemplate.exchange(fullUrl, method, entity, String.class);
 
