@@ -1,4 +1,4 @@
-package com.example.RedNorte_API_GATEWAY.service;
+package com.example.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;

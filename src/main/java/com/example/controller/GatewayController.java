@@ -1,6 +1,6 @@
-package com.example.RedNorte_API_GATEWAY.controller;
+package com.example.controller;
 
-import com.example.RedNorte_API_GATEWAY.service.GatewayService;
+import com.example.service.GatewayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
