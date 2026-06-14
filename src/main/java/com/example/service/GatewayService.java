@@ -21,16 +21,19 @@ public class GatewayService {
         try {
             String path = request.getRequestURI();
             String fullUrl = targetUrl + path;
+
             HttpHeaders requestHeaders = new HttpHeaders();
             Enumeration<String> headerNames = request.getHeaderNames();
             while (headerNames.hasMoreElements()) {
                 String headerName = headerNames.nextElement();
                 if (!headerName.equalsIgnoreCase("host") &&
-                    !headerName.equalsIgnoreCase("accept-encoding")) {
+                    !headerName.equalsIgnoreCase("accept-encoding") &&
+                    !headerName.equalsIgnoreCase("content-length")) {
                     requestHeaders.add(headerName, request.getHeader(headerName));
                 }
             }
-            String body = null;
+
+            String body = "";
             try {
                 body = new String(request.getInputStream().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
             } catch (IOException e) {
