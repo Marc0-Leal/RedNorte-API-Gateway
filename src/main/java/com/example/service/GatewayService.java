@@ -18,14 +18,15 @@ public class GatewayService {
 
     public ResponseEntity<?> forwardRequest(HttpServletRequest request, String targetUrl) {
         try {
-            String path = request.getRequestURI(); // ← sin el .replace()
+            String path = request.getRequestURI();
             String fullUrl = targetUrl + path;
 
             HttpHeaders headers = new HttpHeaders();
             Enumeration<String> headerNames = request.getHeaderNames();
             while (headerNames.hasMoreElements()) {
                 String headerName = headerNames.nextElement();
-                if (!headerName.equalsIgnoreCase("host")) {
+                if (!headerName.equalsIgnoreCase("host") &&
+                    !headerName.equalsIgnoreCase("accept-encoding")) {
                     headers.add(headerName, request.getHeader(headerName));
                 }
             }
