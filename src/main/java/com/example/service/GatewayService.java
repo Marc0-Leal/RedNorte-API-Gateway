@@ -7,7 +7,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
 
@@ -19,12 +18,9 @@ public class GatewayService {
 
     public ResponseEntity<?> forwardRequest(HttpServletRequest request, String targetUrl) {
         try {
-            // Construir URL del microservicio
-            String path = request.getRequestURI()
-                .replace("/api", ""); 
+            String path = request.getRequestURI(); // ← sin el .replace()
             String fullUrl = targetUrl + path;
 
-            // Copiar headers
             HttpHeaders headers = new HttpHeaders();
             Enumeration<String> headerNames = request.getHeaderNames();
             while (headerNames.hasMoreElements()) {
@@ -34,13 +30,9 @@ public class GatewayService {
                 }
             }
 
-            // Crear entidad con headers
             HttpEntity<?> entity = new HttpEntity<>(headers);
-
-            // Ejecutar request
             HttpMethod method = HttpMethod.valueOf(request.getMethod());
             ResponseEntity<?> response = restTemplate.exchange(fullUrl, method, entity, String.class);
-
             return response;
 
         } catch (Exception e) {
