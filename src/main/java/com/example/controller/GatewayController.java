@@ -1,10 +1,8 @@
 package com.example.RedNorte_API_GATEWAY.controller;
-
-import com.example.service.GatewayService;
+import com.example.RedNorte_API_GATEWAY.service.GatewayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
@@ -14,10 +12,6 @@ public class GatewayController {
     @Autowired
     private GatewayService gatewayService;
 
-    /**
-     * ENDPOINT DE PRUEBA
-     * GET http://localhost:8080/api/test
-     */
     @GetMapping("/test")
     public ResponseEntity<?> test() {
         return ResponseEntity.ok(new Object() {
@@ -26,35 +20,22 @@ public class GatewayController {
         });
     }
 
-    /**
-     * RUTAS CLÍNICA
-     * GET/POST http://localhost:8080/api/clinica/**
-     */
-    @RequestMapping(value = "/hospital/**", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
-    public ResponseEntity<?> clinica(HttpServletRequest request) {
+    @RequestMapping(value = "/hospital/**", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH})
+    public ResponseEntity<?> hospital(HttpServletRequest request) {
         return gatewayService.forwardRequest(request, "http://localhost:8081");
     }
 
-    /**
-     * RUTAS OPTIMIZACIÓN
-     */
-    @RequestMapping(value = "/optimizacion/**", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
+    @RequestMapping(value = "/optimizacion/**", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH})
     public ResponseEntity<?> optimizacion(HttpServletRequest request) {
         return gatewayService.forwardRequest(request, "http://localhost:8082");
     }
 
-    /**
-     * RUTAS COMUNICACIÓN
-     */
-    @RequestMapping(value = "/comunicacion/**", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
+    @RequestMapping(value = "/comunicacion/**", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH})
     public ResponseEntity<?> comunicacion(HttpServletRequest request) {
         return gatewayService.forwardRequest(request, "http://localhost:8083");
     }
 
-    /**
-     * RUTAS REPORTES
-     */
-    @RequestMapping(value = "/reportes/**", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
+    @RequestMapping(value = "/reportes/**", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH})
     public ResponseEntity<?> reportes(HttpServletRequest request) {
         return gatewayService.forwardRequest(request, "http://localhost:8084");
     }
