@@ -23,7 +23,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private static final String BEARER_PREFIX = "Bearer ";
-
     private final JwtTokenService jwtTokenService;
 
     public JwtAuthenticationFilter(JwtTokenService jwtTokenService) {
@@ -36,7 +35,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         HttpServletResponse response,
         FilterChain filterChain
     ) throws ServletException, IOException {
+
         String path = request.getRequestURI();
+        String method = request.getMethod();
+
+        // Permitir registro de usuario sin token
+        if (path.equals("/api/cliente") && method.equals("POST")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        // Permitir rutas que no sean /api/
         if (!path.startsWith("/api/")) {
             filterChain.doFilter(request, response);
             return;
@@ -53,11 +62,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             JWTClaimsSet claims = jwtTokenService.validate(token);
             String subject = claims.getSubject();
             Collection<? extends GrantedAuthority> authorities = extractAuthorities(claims);
-
             UsernamePasswordAuthenticationToken authentication =
                 new UsernamePasswordAuthenticationToken(subject, null, authorities);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-
             filterChain.doFilter(request, response);
         } catch (IllegalArgumentException ex) {
             writeUnauthorized(response, ex.getMessage());
@@ -71,11 +78,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         } catch (ParseException ex) {
             return List.of();
         }
-
         if (roles == null || roles.isEmpty()) {
             return List.of();
         }
-
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         for (String role : roles) {
             authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
