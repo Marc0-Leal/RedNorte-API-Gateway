@@ -25,7 +25,8 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/actuator/health", "/actuator/health/**", "/actuator/info").permitAll()
                 .requestMatchers("/auth/token").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/cliente").permitAll() // ← agregar esto
+                .requestMatchers(HttpMethod.POST, "/api/cliente").permitAll()
+                .requestMatchers("/api/notificaciones/**").permitAll() // ← agregar esto
                 .anyRequest().authenticated()
             )
             .httpBasic(AbstractHttpConfigurer::disable)
