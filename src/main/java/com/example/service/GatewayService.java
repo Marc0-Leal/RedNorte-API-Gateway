@@ -25,6 +25,7 @@ public class GatewayService {
             if (path.startsWith("/api/notificaciones/")) {
                 String subPath = path.replace("/api/notificaciones", "");
                 fullUrl = targetUrl + subPath;
+                System.out.println("=== NOTIFICACIONES URL: " + fullUrl);
             } else {
                 fullUrl = targetUrl + path;
             }
