@@ -39,14 +39,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
         String method = request.getMethod();
 
-        // Permitir registro de usuario sin token
         if (path.equals("/api/cliente") && method.equals("POST")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        // Permitir rutas que no sean /api/
-        if (!path.startsWith("/api/")) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -54,6 +47,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
+
+        if (!path.startsWith("/api/")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (authHeader == null || !authHeader.startsWith(BEARER_PREFIX)) {
             writeUnauthorized(response, "Missing bearer token");
