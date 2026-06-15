@@ -20,7 +20,14 @@ public class GatewayService {
     public ResponseEntity<?> forwardRequest(HttpServletRequest request, String targetUrl) {
         try {
             String path = request.getRequestURI();
-            String fullUrl = targetUrl + path;
+
+            String fullUrl;
+            if (path.startsWith("/api/notificaciones/")) {
+                String subPath = path.replace("/api/notificaciones", "");
+                fullUrl = targetUrl + subPath;
+            } else {
+                fullUrl = targetUrl + path;
+            }
 
             HttpHeaders requestHeaders = new HttpHeaders();
             Enumeration<String> headerNames = request.getHeaderNames();

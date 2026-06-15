@@ -50,7 +50,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-
+        if (path.startsWith("/api/notificaciones/")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
         String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (authHeader == null || !authHeader.startsWith(BEARER_PREFIX)) {
             writeUnauthorized(response, "Missing bearer token");

@@ -69,8 +69,8 @@ public class GatewayController {
     }
 
     // ── NOTIFICACIONES ───────────────────────────────────────────────
-    @RequestMapping(value = "/comunicacion/**", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH})
-    public ResponseEntity<?> comunicacion(HttpServletRequest request) {
+    @RequestMapping(value = "/notificaciones/**", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH})
+    public ResponseEntity<?> notificaciones(HttpServletRequest request) {
         return gatewayService.forwardRequest(request, "https://rednorte-notificaciones.onrender.com");
     }
 }
