@@ -40,10 +40,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String method = request.getMethod();
 
         if (path.equals("/api/cliente") && method.equals("POST")) {
+            System.out.println("=== CLIENTE POST PERMITIDO: " + path);
             filterChain.doFilter(request, response);
             return;
         }
+
         if (path.startsWith("/api/notificaciones/")) {
+            System.out.println("=== NOTIFICACIONES PERMITIDO: " + path);
             filterChain.doFilter(request, response);
             return;
         }
