@@ -24,7 +24,7 @@ public class GatewayController {
     // ── GESTIÓN ──────────────────────────────────────────────────────
     @RequestMapping(value = "/hospital/**", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH})
     public ResponseEntity<?> hospital(HttpServletRequest request) {
-        return gatewayService.forwardRequest(request, "https://rednorte-gestion-osku.onrender.com");
+        return gatewayService.forwardRequest(request, "https://rednorte-optimizacion.onrender.com");
     }
 
     @RequestMapping(value = "/cliente/**", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH})
@@ -34,7 +34,7 @@ public class GatewayController {
 
     @RequestMapping(value = "/medico/**", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH})
     public ResponseEntity<?> medico(HttpServletRequest request) {
-        return gatewayService.forwardRequest(request, "https://rednorte-gestion-osku.onrender.com");
+        return gatewayService.forwardRequest(request, "https://rednorte-optimizacion.onrender.com");
     }
 
     @RequestMapping(value = "/citaMedica/**", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH})
@@ -54,12 +54,12 @@ public class GatewayController {
 
     @RequestMapping(value = "/comuna/**", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH})
     public ResponseEntity<?> comuna(HttpServletRequest request) {
-        return gatewayService.forwardRequest(request, "https://rednorte-gestion-osku.onrender.com");
+        return gatewayService.forwardRequest(request, "https://rednorte-optimizacion.onrender.com");
     }
 
     @RequestMapping(value = "/region/**", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH})
     public ResponseEntity<?> region(HttpServletRequest request) {
-        return gatewayService.forwardRequest(request, "https://rednorte-gestion-osku.onrender.com");
+        return gatewayService.forwardRequest(request, "https://rednorte-optimizacion.onrender.com");
     }
 
     // ── OPTIMIZACIÓN ─────────────────────────────────────────────────
