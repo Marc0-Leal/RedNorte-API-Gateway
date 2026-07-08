@@ -73,4 +73,9 @@ public class GatewayController {
     public ResponseEntity<?> notificaciones(HttpServletRequest request) {
         return gatewayService.forwardRequest(request, "https://rednorte-notificaciones.onrender.com");
     }
+
+    @RequestMapping(value = "/atenciones/**", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH})
+    public ResponseEntity<?> atenciones(HttpServletRequest request) {
+        return gatewayService.forwardRequest(request, "https://rednorte-seguridad-y-reportes.onrender.com");
+    }
 }
